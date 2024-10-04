@@ -3,9 +3,9 @@
 include("connection.php");
 $con = connection();
 
-$id=$_GET["id"];
+$id=$_GET["idAlumnos"];
 
-$sql="DELETE FROM projects WHERE id='$id'";
+$sql="DELETE FROM alumnos WHERE idAlumnos='$id'";
 $query = mysqli_query($con, $sql);
 
 if($query){
