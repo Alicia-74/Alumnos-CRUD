@@ -3,17 +3,18 @@
 include("connection.php");
 $con = connection();
 
-$id=0;
+$id=$_POST["idAlumnos"];
 $name = $_POST['nombreAlumnos'];
 $edad = $_POST['edad'];
 
-$sql = "INSERT INTO alumnos VALUES('$id','$name','$edad')";
+
+$sql="UPDATE alumnos SET nombreAlumnos='$name', edad='$edad' WHERE idAlumnos='$id'";
 $query = mysqli_query($con, $sql);
 
 if($query){
     Header("Location: ../index.php");
 }else{
-    
+
 }
 
 ?>

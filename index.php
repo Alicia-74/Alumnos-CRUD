@@ -2,7 +2,7 @@
 include("CRUD/connection.php");
 $con = connection();
 
-$sql = "SELECT * FROM projects";
+$sql = "SELECT * FROM alumnos";
 $query = mysqli_query($con, $sql);
 ?>
 
@@ -42,54 +42,52 @@ $query = mysqli_query($con, $sql);
     <link rel="shortcut icon" href="media/icon/favicon.png" type="image/xpng">
 
     <!-- Titulo -->
-    <title>CRUD Projects </title>
+    <title>CRUD Alumnos</title>
 
 </head>
 
 <body>
     <div class="container d-flex justify-content-center .align-items-center gap-3">
-        <?php while ($row = mysqli_fetch_array($query)): ?>
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="<?= $row['img'] ?>" alt="imagen">
-                <div class="card-body">
-                    <h5 class="card-title"><?= $row['name'] ?></h5>
-                    <?php foreach (json_decode($row['technologies']) as $tec): ?>
-                        <small class="text-info"><?= $tec ?></small>
-                    <?php endforeach; ?>
-                    <p class="card-text"><?= $row['description'] ?></p>
-                    <a href="<?= $row['link'] ?>" class="btn btn-primary">Mas info</a><a href="updateForm/update.php?id=<?= $row['id'] ?>" class="btn btn-secondary">Editar</a><a href="CRUD/delete_project.php?id=<?= $row['id'] ?>" class="btn btn-danger">Borrar</a>
-                </div>
-            </div>
-        <?php endwhile; ?>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>ID Alumno</th>
+                    <th>Nombre Alumno</th>
+                    <th>Edad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row = mysqli_fetch_array($query)): ?>
+                <tr>
+                    <td><?= $row['idAlumnos'] ?></td>
+                    <td><?= $row['nombreAlumnos'] ?></td>
+                    <td><?= $row['edad'] ?></td>
+                    <td>
+                        <a href="./updateForm/update.php?idAlumnos=<?= $row['idAlumnos'] ?>" class="btn btn-success">Editar</a>
+                        <a href="./CRUD/delete_alumnos.php?idAlumnos=<?= $row['idAlumnos'] ?>" class="btn btn-danger">Borrar</a>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
     </div>
 
     <div class="container mt-5">
         <h1 class="text-center">Insertar</h1>
         <form action="CRUD/insert_project.php" method="POST">
-            <div class="form-group">
-                <input type="hidden" class="form-control" name="id">
+        <div class="form-group">
+                <input type="hidden" class="form-control" name="idAlumnos" value="<?= $row['idAlumnos']?>">
             </div>
             <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre">
+                <label for="name">Nombre</label>
+                <input type="text" class="form-control" id="name" name="nombreAlumnos" placeholder="Nombre">
             </div>
             <div class="form-group">
-                <label for="technologies">Technologies</label>
-                <input type="text" class="form-control" id="technologies" name="technologies" placeholder="Technologies">
-            <small class="form-text text-muted">Ejemplo: ["HTML", "CSS"]</small>
+                <label for="edad">Edad</label>
+                <input type="number" class="form-control" id="edad" name="edad" placeholder="Edad">
             </div>
-            <div class="form-group">
-                <label for="img">Imagen</label>
-                <input type="text" class="form-control" id="img" name="img" placeholder="Imagen">
-            </div>
-            <div class="form-group">
-                <label for="descripcion">Descripcion</label>
-                <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Descripcion">
-            </div>
-            <div class="form-group">
-                <label for="enlace">Enlace</label>
-                <input type="text" class="form-control" id="enlace" name="enlace" placeholder="enlace">
-            </div>
+
             <input type="submit" class="m-3 btn btn-primary" value="Insertar">
         </form>
     </div>
